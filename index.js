@@ -59,12 +59,12 @@ function propmtSections(){
       name: "screenshotImage",
       when: (answers) => answers.has_screenshot,
     },
-    {
-      type: "checkbox",
-      message: "Please select one of the following license : ",
-      name: ['dsds', 'dsd', 'dsds'],
-      value: 
-    }
+    // {
+    //   type: "checkbox",
+    //   message: "Please select one of the following license : ",
+    //   name: ['dsds', 'dsd', 'dsds'],
+    //   value: 
+    // }
 ])}
 
 
