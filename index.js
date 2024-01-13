@@ -135,24 +135,41 @@ async function promptRepeat(textType, msg) {
   }
 }
 
-function promptList(args){
-  const {listType, msg, list} = args;
 
+function promptTechnology(){  
+  return inquirer.prompt([
+    {
+      type: 'checkbox',
+      message: 'Select technologies used in this project',
+      name: 'technologies',
+      choices: ['JavaScript', 'React', 'Node.js', 'CSS', 'MySQL', 'SQL', 'JQuery', 'HTML'],
+      validate(answer) {
+        if (answer.length < 1) {
+          return 'You must choose at least one technology.';
+        }
+
+        return true;
+      },
+    }
+  ])
+} 
+
+function promptLicense(){  
   return inquirer.prompt([
     {
       type: 'list',
-      name: listType,
-      message: msg,
-      choices: list,
-      filter(val) {
-        return val.toLowerCase();
-      },
+      name: 'license',
+      message: 'What kind of license should your project have?',
+      choices: ['MIT', 'BSD 3', 'GPL v3', 'MPL 2', 'Apache 2'],
+      // filter(val) {
+      //   return val.toLowerCase();
+      // },
     },
   ])
 }
 
-function generateReadme(fileName, data){
-  fs.writeFile(fileName, data, 'utf8', (err) =>{
+function generateReadme(fileName, data){  
+  fs.writeFile(fileName, data, 'UTF-8', (err) =>{
     if(err){
       console.log(err);
       return;
@@ -171,17 +188,15 @@ async function askQuestions() {
 
     const emailAnswer = await promptText('email', 'What is your email address?');
 
-    const projectNameAnswer = await promptText('title', 'What is your project\'s title?');
-   
     const logoAnswer = await promptImage('logo');
+
+    const projectNameAnswer = await promptText('title', 'What is your project\'s title?');   
 
     const descriptionAnswer = await promptText('description', 'Please write a short description of your project');
 
-    const licenseAnswer = await promptList({
-      listType: 'license', 
-      msg: 'What kind of license should your project have?',
-      list: ['MIT', 'BSD 3', 'GPL v3', 'MPL 2', 'Apache 2']
-    });
+    const technologyAnswer = await promptTechnology();
+
+    const licenseAnswer = await promptLicense();
 
     const screenshotAnswer = await promptImage('screenshot');
     
@@ -202,14 +217,45 @@ async function askQuestions() {
 
     const acknowledAnswer = await promptTextConfirm('acknowledgments');
 
+    const licenses = { 
+      'MIT':'https://img.shields.io/badge/License-MIT-yellow.svg',      
+      'BSD 3':'https://img.shields.io/badge/License-BSD_3--Clause-orange.svg',
+      'GPL v3':'https://img.shields.io/badge/License-GPLv3-blue.svg',
+      'MPL 2':'https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg',
+      'Apache 2':'https://img.shields.io/badge/License-Apache_2.0-yellowgreen.svg',
+    };
+
+    const license = {
+      licenseType: licenseAnswer['license'],
+      licenseUrl: licenses[licenseAnswer['license']]
+    };
+
+    const technologies = {
+      "JavaScript" : '[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)', 
+      "React" : '[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)',
+      "Node.js" : '[![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)](https://nodejs.org/)', 
+      "CSS" : '[![CSS](https://img.shields.io/badge/CSS3-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/CSS)',
+      "MySQL" : '[![MySQL](https://img.shields.io/badge/MySQL-lightgrey.svg)](https://www.mysql.com/)',
+      "SQL" : '[![SQL](https://img.shields.io/badge/SQL-lightgrey.svg)](https://www.mysql.com/)',
+      "JQuery" : '[![jQuery](https://img.shields.io/badge/jQuery-3.x-blueviolet.svg)](https://jquery.com/)',
+      "HTML" : '[![HTML](https://img.shields.io/badge/HTML5-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)'
+    }
+
+    const technologiesPicked = Object.entries(technologies)
+    .filter((technology) => JSON.stringify([technologyAnswer['technologies']]).includes(technology[0]))
+    .map(url => url[1])
+    .join(' ');
+
+  
     // Combine all answers
-    const allAnswers = {
+    const allAnswers = generateMarkdown({
       ...githubUserNameAnswer,
       ...emailAnswer,
       ...logoAnswer,
+      ...{tech: technologiesPicked},
       ...projectNameAnswer,
       ...descriptionAnswer,
-      ...licenseAnswer,
+      ...license,
       ...screenshotAnswer,
       ...screenDescriptionAnswer,
       ...featuresTableAnswer,
@@ -218,13 +264,13 @@ async function askQuestions() {
       ...usageAnswer,
       ...testAnswer,
       ...acknowledAnswer,
-    };
+    });
 
-    console.log(allAnswers)
     // Generate markdown
     // const markdownContent = generateMarkdown(allAnswers);
  
     // writeToFile('README.md', markdownContent);
+    generateReadme('./output/README.md', allAnswers);
 
     // console.log('Generating README...');
   } catch (error) {
