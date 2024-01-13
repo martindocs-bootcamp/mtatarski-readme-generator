@@ -12,11 +12,11 @@ const generateMarkdown = require("./utils/generateMarkdown");
  description - DONE
  screenshoot (optional) - DONE
  installation - DONE
- usage 
- contributing
- tests
- questions  
- licence 
+ usage - DONE
+ contributing - DONE
+ tests - DONE
+ questions  - DONE
+ licence - DONE
  
  table of context (based on above)
 
@@ -41,6 +41,25 @@ function promptText(textType, msg) {
       name: textType,      
       validate: (input) => validation(input, textType),
     },    
+  ]);
+}
+
+function promptTextConfirm(textType, msg) {
+  const has_text = `has_${textType}`;
+
+  return inquirer.prompt([
+    {
+      type: "confirm",
+      message: `Any ${textType} to this project?`,    
+      name: has_text,
+      default: false,
+    },    
+    {
+      type: "input",
+      message: "Enter the GitHub usernames (comma separated)",
+      name: `${textType}Text`,
+      when: (answers) => answers[has_text],
+    },
   ]);
 }
   
@@ -78,7 +97,7 @@ async function promptRepeat(textType, msg) {
   ]);
   
   if(isProcede[textType]){
-    let askAgain = true;
+    let askAgain = true;    
 
     while (askAgain) {
       const response = await inquirer.prompt([
@@ -91,13 +110,19 @@ async function promptRepeat(textType, msg) {
         {
           type: 'input',
           name: `${textType}Desc`,
-          message: `Enter the description of the ${textType}:`,
+          message: `Enter the ${
+            textType === 'instalation' || textType === 'test' ? 
+            `${textType} command` : `${textType} description`
+          }`,
           validate : (input) => validation(input, textType),   
         },
         {
           type: 'confirm',
           name: 'askAgain',
-          message: `Want to enter another ${textType === 'instalation' ? `${textType} step` : textType} (enter for YES)?`,
+          message: `Want to enter another ${
+            textType === 'instalation' || textType === 'test' ? 
+            `${textType} step` : textType
+          } (enter for YES)?`,
           default: true,
         },
       ]);
@@ -110,6 +135,22 @@ async function promptRepeat(textType, msg) {
   }
 }
 
+function promptList(args){
+  const {listType, msg, list} = args;
+
+  return inquirer.prompt([
+    {
+      type: 'list',
+      name: listType,
+      message: msg,
+      choices: list,
+      filter(val) {
+        return val.toLowerCase();
+      },
+    },
+  ])
+}
+
 // Function to ask questions
 async function askQuestions() {
   try {
@@ -118,19 +159,36 @@ async function askQuestions() {
 
     const emailAnswer = await promptText('email', 'What is your email address?');
 
-    const projectNameAnswer = await promptText('name', 'What is your project name?');
+    const projectNameAnswer = await promptText('title', 'What is your project\'s title?');
    
     const logoAnswer = await promptImage('logo');
 
     const descriptionAnswer = await promptText('description', 'Please write a short description of your project');
 
+    const licenseAnswer = await promptList({
+      listType: 'license', 
+      msg: 'What kind of license should your project have?',
+      list: ['MIT', 'BSD 3', 'GPL v3', 'MPL 2', 'Apache 2']
+    });
+
     const screenshotAnswer = await promptImage('screenshot');
+    
+    let screenDescriptionAnswer = {};
+    if(screenshotAnswer['has_screenshot']){
+      screenDescriptionAnswer = await promptText('screenshotDesc', 'Please write an short screenshot description');
+    }
     
     const featuresTableAnswer = await promptRepeat('feature', 'Enter feature name');
 
-    const modulesTableAnswer = await promptRepeat('module', 'Enter module name');
+    const modulesTableAnswer = await promptRepeat('module', 'Enter module name (with extension)');
 
-    const instalationAnswer = await promptRepeat('instalation', 'Enter instalation steps');
+    const instalationAnswer = await promptRepeat('instalation', 'Enter instalation step');
+
+    const usageAnswer = await promptRepeat('usage', 'What does the user need to know about using the repo?');
+
+    const testAnswer = await promptRepeat('test', 'What commands should be run to run the tests?');
+
+    const acknowledAnswer = await promptTextConfirm('acknowledgments');
 
     // Combine all answers
     const allAnswers = {
@@ -139,20 +197,24 @@ async function askQuestions() {
       ...projectNameAnswer,
       ...logoAnswer,
       ...descriptionAnswer,
+      ...licenseAnswer,
       ...screenshotAnswer,
+      ...screenDescriptionAnswer,
       ...featuresTableAnswer,
       ...modulesTableAnswer,
       ...instalationAnswer,
-
+      ...usageAnswer,
+      ...testAnswer,
+      ...acknowledAnswer,
     };
 
     console.log(allAnswers)
     // Generate markdown
-    const markdownContent = generateMarkdown(allAnswers);
+    // const markdownContent = generateMarkdown(allAnswers);
  
     // writeToFile('README.md', markdownContent);
 
-    console.log('Generated README:\n', markdownContent);
+    console.log('Generating README...');
   } catch (error) {
     console.error('Error during question prompts:', error);
   }
