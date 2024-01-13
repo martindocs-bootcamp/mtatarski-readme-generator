@@ -151,6 +151,18 @@ function promptList(args){
   ])
 }
 
+function generateReadme(fileName, data){
+  fs.writeFile(fileName, data, 'utf8', (err) =>{
+    if(err){
+      console.log(err);
+      return;
+    }
+
+    console.log('Generating README...');
+  });
+}
+
+
 // Function to ask questions
 async function askQuestions() {
   try {
@@ -194,8 +206,8 @@ async function askQuestions() {
     const allAnswers = {
       ...githubUserNameAnswer,
       ...emailAnswer,
-      ...projectNameAnswer,
       ...logoAnswer,
+      ...projectNameAnswer,
       ...descriptionAnswer,
       ...licenseAnswer,
       ...screenshotAnswer,
@@ -214,7 +226,7 @@ async function askQuestions() {
  
     // writeToFile('README.md', markdownContent);
 
-    console.log('Generating README...');
+    // console.log('Generating README...');
   } catch (error) {
     console.error('Error during question prompts:', error);
   }
