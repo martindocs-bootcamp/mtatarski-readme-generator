@@ -87,16 +87,22 @@ function promptImage(imgType){
 async function promptRepeat(textType, msg) {
   const answers = [];
   
-  const isProcede = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: textType,
-      message: `Do you want to add ${textType} section?`,
-      default: false,
-    },
-  ]);
-  
-  if(isProcede[textType]){
+  if(textType === 'module' || textType === 'test'){    
+    const isProcede = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: textType,
+        message: `Do you want to add ${textType} section?`,
+        default: false,
+      },
+    ]);
+    
+    if(!isProcede[textType]) {
+      return {[textType]: false}
+    };
+  }  
+
+  // if(isProcede[textType]){
     let askAgain = true;    
 
     while (askAgain) {
@@ -120,8 +126,8 @@ async function promptRepeat(textType, msg) {
           type: 'confirm',
           name: 'askAgain',
           message: `Want to enter another ${
-            textType === 'instalation' || textType === 'test' ? 
-            `${textType} step` : textType
+            textType === 'test' ? 
+            `${textType} step` : `${textType} description`
           } (enter for YES)?`,
           default: true,
         },
@@ -132,7 +138,7 @@ async function promptRepeat(textType, msg) {
     }
   
     return {[textType]: answers };
-  }
+  // }
 }
 
 function promptTechnology(){  
@@ -167,44 +173,51 @@ function promptLicense(){
   ])
 }
 
+// Function to filter table of contents based on user responses
+function filterTableOfContents(answers) {
+  const tableOfContents = {
+    description: "- [Overview](#overview)",
+    has_screenshot: "- [Screenshot](#screenshot)",
+    feature: "- [Features](#features)",
+    installation: "- [Installation](#installation)",
+    usage: "- [How to use it](#how-to-use-it)",
+    module: "- [Modules](#modules)",
+    repo: "- [Contributing](#contributing)",
+    test: "- [Test](#test)",
+    email: "- [Questions](#questions)",
+    licenseType: "- [License](#license)",
+    acknowledge: "- [Acknowledgments](#acknowledgments)",
+  };
+
+  // Filtered data entries user didnt choose
+  const filteredEntries =Object.entries(answers)  
+  .filter(([_, value]) => value) // Filter 'false' values / not choosen
+  .map(([key]) => key); // Getting keys of filtered entries
+  
+  // Return the Table of Contents which user has chosen
+  return Object.entries(tableOfContents)
+  .filter(([key]) => filteredEntries.includes(key))
+  .map(([_, value]) => value).join('\n');
+}
+
+
 // Function to ask questions
 async function askQuestions() {
   try {
     
+    // GitHub username
     const githubUserNameAnswer = await promptText('GitHub', 'What is your GitHub username?');
 
+    // User email address
     const emailAnswer = await promptText('email', 'What is your email address?');
 
-    const logoAnswer = await promptImage('logo');
+    // Repository name
+    const repoAnswer = await promptText('repo', 'What is your repository name?');
 
-    const projectNameAnswer = await promptText('title', 'What is your project\'s title?');   
+    // License type
+    const licenseBadgesAnswer = await promptLicense();
 
-    const descriptionAnswer = await promptText('description', 'Please write a short description of your project');
-
-    const technologyAnswer = await promptTechnology();
-
-    const licenseAnswer = await promptLicense();
-
-    const screenshotAnswer = await promptImage('screenshot');
-    
-    let screenDescriptionAnswer = {};
-    if(screenshotAnswer['has_screenshot']){
-      screenDescriptionAnswer = await promptText('screenshotDesc', 'Please write an short screenshot description');
-    }
-    
-    const featuresTableAnswer = await promptRepeat('feature', 'Enter feature name');
-
-    const modulesTableAnswer = await promptRepeat('module', 'Enter module name (with extension)');
-
-    const instalationAnswer = await promptRepeat('instalation', 'Enter instalation step');
-
-    const usageAnswer = await promptRepeat('usage', 'What does the user need to know about using the repo?');
-
-    const testAnswer = await promptRepeat('test', 'What commands should be run to run the tests?');
-
-    const acknowledAnswer = await promptTextConfirm('acknowledgments');
-
-    const licenses = { 
+    const licensesBadges = { 
       'MIT':'https://img.shields.io/badge/License-MIT-yellow.svg',      
       'BSD3':'https://img.shields.io/badge/License-BSD_3--Clause-orange.svg',
       'GPLv3':'https://img.shields.io/badge/License-GPLv3-blue.svg',
@@ -212,10 +225,13 @@ async function askQuestions() {
       'Apache2':'https://img.shields.io/badge/License-Apache_2.0-yellowgreen.svg',
     };
 
-    const license = {
-      licenseType: licenseAnswer['license'],
-      licenseUrl: licenses[licenseAnswer['license']]
+    const licenseBadge = {
+      licenseType: licenseBadgesAnswer['license'],
+      licenseUrl: licensesBadges[licenseBadgesAnswer['license']]
     };
+
+    // Technologies used
+    const technologyAnswer = await promptTechnology();
 
     const technologies = {
       "JavaScript" : '[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)', 
@@ -232,39 +248,121 @@ async function askQuestions() {
     .filter((technology) => JSON.stringify([technologyAnswer['technologies']]).includes(technology[0]))
     .map(url => url[1])
     .join(' ');
+    
+    // Project title
+    const projectNameAnswer = await promptText('title', 'What is your project\'s title?');   
+    
+    // Project description
+    const descriptionAnswer = await promptText('description', 'Please write a short description of your project');
+    
+    // Project installation process
+    const instalationAnswer = await promptRepeat('instalation', 'Please provide installation description');
+
+    const installation = instalationAnswer['instalation'].map((steps, index) => {
+      return `${index + 1}. ${steps.name}:\n\`\`\`sh\n${steps.description}\n\`\`\`\n`
+    }).join('');
+    
+    // How to use project 
+    const usageAnswer = await promptText('usage', 'What does the user need to know about using the repo? (sentance separated with fullstop)');
   
-    // Combine all answers
-    const allAnswers = markdownTemplate({
+    const usage = usageAnswer['usage']
+    .split('.')
+    .filter(empty => empty !== '')
+    .map((str, index) => `${index + 1}. ${str.trim()}`)
+    .join('\n')
+      
+    // Project features
+    const featuresTableAnswer = await promptRepeat('feature', 'Please provide name of the project feature');
+
+    const features = featuresTableAnswer['feature'].map((feature) => `| ${feature.name} | ${feature.description} |`).join('\n');
+
+    // Project logo
+    const logoAnswer = await promptImage('logo');
+
+    // Project screenshot
+    const screenshotAnswer = await promptImage('screenshot');
+    
+    let screenDescriptionAnswer = {};
+    if(screenshotAnswer['has_screenshot']){
+      screenDescriptionAnswer = await promptText('screenshotDesc', 'Please write an short screenshot description');
+    }
+    
+    // Project modules
+    const modulesTableAnswer = await promptRepeat('module', 'Enter module name (with extension)');
+
+    let module = false;
+    if(modulesTableAnswer['module']){
+      module = modulesTableAnswer['module'].map((file) => {
+        return `| ${file.name} | ${file.description} |`
+      }).join('\n');
+    }
+    
+    // Project test process
+    const testAnswer = await promptRepeat('test', 'What commands should be run to run the tests?');
+
+    let test = false;
+    if(testAnswer['test']){
+      test = testAnswer['test'].map((steps, index) => {
+        return `${index + 1}. ${steps.name}:\n\`\`\`sh\n${steps.description}\n\`\`\`\n`
+      }).join('');
+    }
+
+    // Acknowledge
+    const acknowledAnswer = await promptTextConfirm('acknowledgments');
+
+    let acknowledge = false;
+    if(acknowledAnswer['acknowledgmentsText']){
+      acknowledge = acknowledAnswer['acknowledgmentsText']
+      .split(',')
+      .filter(empty => empty !== '')
+      .map((str) => `- ${str.trim()}`)
+      .join('\n')
+    }
+
+    // All answers
+    const allAnswers = {
       ...githubUserNameAnswer,
       ...emailAnswer,
-      ...logoAnswer,
+      ...repoAnswer,
+      ...licenseBadge,
       ...{tech: technologiesPicked},
       ...projectNameAnswer,
       ...descriptionAnswer,
-      ...license,
+      ...{installation: installation},
+      ...{usage: usage},
+      ...{feature: features},
+      ...logoAnswer,
       ...screenshotAnswer,
       ...screenDescriptionAnswer,
-      ...featuresTableAnswer,
-      ...modulesTableAnswer,
-      ...instalationAnswer,
-      ...usageAnswer,
-      ...testAnswer,
-      ...acknowledAnswer,
+      ...{module: module},
+      ...{test: test},
+      ...{acknowledge: acknowledge},
+    };
+
+    // Filtered Table of Contents
+    const table = filterTableOfContents(allAnswers);
+
+    // Data for generating the Readme file
+    const answers =  markdownTemplate({
+      ...allAnswers,
+      ...{table: table}
     });
 
-    generateMarkdown('../output/README.md', allAnswers);
+    // Generating the Readme file
+    generateMarkdown('../output/README.md', answers);
 
+    // Copy the logo image
     if(logoAnswer['has_logo']){
       const logoImage = JSON.stringify(logoAnswer['logoImage']).split('"')[1];
       copyImage(`../temp/images/${logoImage}`, `../output/images/${logoImage}`);
     }
 
+    // Copy the screenshot image
     if(screenshotAnswer['has_screenshot']){
       const screenshotImage = JSON.stringify(screenshotAnswer['screenshotImage']).split('"')[1];
       copyImage(`../temp/images/${screenshotImage}`, `../output/images/${screenshotImage}`);
     }
-
-    // console.log('Generating README...');
+   
   } catch (error) {
     console.error('Error during question prompts:', error);
   }
