@@ -3,7 +3,7 @@ function generateMarkdown(data) {
   console.log(data)
   return `
 <div style="text-align: center;">${data.has_logo ? `\n\t<img src="./images/${data.logoImage}" width="100" alt="${data.logoImage.split('.')[0]} logo image" />` : ''}
-  <h1>${data.title}</h1>
+  <h1 style="margin: 0">${data.title}</h1>
 
 ${data.tech}
 
@@ -14,19 +14,6 @@ ${data.tech}
 ---
 
 ## Table of Contents
-- [📍 Overview](#-overview)
-- [📦 Features](#-features)
-- [📂 Repository Structure](#-repository-structure)
-- [⚙️ Modules](#%EF%B8%8F-modules)
-- [🚀 Getting Started](#-getting-started)
-    - [🔧 Installation](#-installation)
-    - [🤖 Running Kids Pocket Money App](#-running-kids-pocket-money-app)
-    - [🌐 Live Demo Kids Pocket Money App](#-live-kids-pocket-money-app)
-    - [📸 Screenshot Kids Pocket Money App](#--kids-pocket-money-app)
-- [🛣 Roadmap](#-roadmap)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [👏 Acknowledgments](#-acknowledgments)
 
 ---
 
