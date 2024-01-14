@@ -3,8 +3,7 @@ const markdownTemplate = require("../templates/markdown");
 const licenseTemplate = require("../templates/license");
 const copyImage = require("../utils/copyFiles");
 const writeFile = require("../utils/writeFiles");
-
-// Markdown symbols
+const generateFolderName = require("../utils/idsGenerator");
 
 function validation(input, textType){  
   if(input.trim() === ''){
@@ -339,6 +338,13 @@ async function askQuestions() {
       ...{acknowledge: acknowledge},
     };
 
+
+    // Generate unique folder name with current date
+    const folderName = generateFolderName();
+
+    // Output folder got Readme files
+    const folderPath = `../output/${folderName}`;
+    
     // Filtered Table of Contents
     const table = filterTableOfContents(allAnswers);
 
@@ -350,21 +356,8 @@ async function askQuestions() {
     });
 
     // Generating the Readme file
-    writeFile('../output/README.md', readme);
-    console.log('Generating README...');
-
-    // Copy the logo image
-    if(logoAnswer['has_logo']){
-      const logoImage = JSON.stringify(logoAnswer['logoImage']).split('"')[1];
-      copyImage(`../temp/images/${logoImage}`, `../output/images/${logoImage}`);
-    }
-
-    // Copy the screenshot image
-    if(screenshotAnswer['has_screenshot']){
-      const screenshotImage = JSON.stringify(screenshotAnswer['screenshotImage']).split('"')[1];
-      copyImage(`../temp/images/${screenshotImage}`, `../output/images/${screenshotImage}`);
-    }
-
+    writeFile(`${folderPath}/README.md`, readme);   
+    
     // Data for generating the Readme file
     const license =  licenseTemplate({
       ...projectNameAnswer,
@@ -372,8 +365,22 @@ async function askQuestions() {
       ...emailAnswer,
     });
 
+    console.log('Generating README...');
+    
     // Generate the license
-    writeFile('../output/LICENSE.md', license);
+    writeFile(`${folderPath}/LICENSE.md`, license);
+
+    // Copy the logo image
+    if(logoAnswer['has_logo']){
+      const logoImage = JSON.stringify(logoAnswer['logoImage']).split('"')[1];
+      copyImage(`../temp/images/${logoImage}`, `../output//${folderName}/images/${logoImage}`);
+    }
+
+    // Copy the screenshot image
+    if(screenshotAnswer['has_screenshot']){
+      const screenshotImage = JSON.stringify(screenshotAnswer['screenshotImage']).split('"')[1];
+      copyImage(`../temp/images/${screenshotImage}`, `../output//${folderName}/images/${screenshotImage}`);
+    }
    
   } catch (error) {
     console.error('Error during question prompts:', error);
