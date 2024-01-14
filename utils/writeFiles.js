@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function generateReadme(fileName, data){  
+function writeFiles(fileName, data){  
   fs.writeFile(fileName, data, 'UTF-8', (err) =>{
     if(err){
       console.log(err);
@@ -11,4 +11,4 @@ function generateReadme(fileName, data){
   });
 };
 
-module.exports = generateReadme;
+module.exports = writeFiles;

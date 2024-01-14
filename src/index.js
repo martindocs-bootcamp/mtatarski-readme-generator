@@ -1,9 +1,7 @@
-const fs = require("fs");
-const path = require('path');
 const inquirer = require("inquirer");
 const markdownTemplate = require("../templates/markdown");
-const copyImage = require("../utils/copyImage");
-const generateMarkdown = require("../utils/generateReadme");
+const copyImage = require("../utils/copyFiles");
+const generateMarkdown = require("../utils/writeFiles");
 
 // Markdown symbols
 /**
@@ -137,7 +135,6 @@ async function promptRepeat(textType, msg) {
   }
 }
 
-
 function promptTechnology(){  
   return inquirer.prompt([
     {
@@ -169,9 +166,6 @@ function promptLicense(){
     },
   ])
 }
-
-
-
 
 // Function to ask questions
 async function askQuestions() {
