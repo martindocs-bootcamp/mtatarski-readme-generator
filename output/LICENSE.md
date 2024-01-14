@@ -1,8 +1,8 @@
 
 <!-- LICENSE TITLE -->
-# FSDFSDFSD License
+# fsdfsdfsd License
 
-This project is licensed under the [![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://opensource.org/licenses/GPLv3).
+This project is licensed under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT).
 
 <!-- LICENSE SECTIONS -->
 
@@ -11,20 +11,16 @@ This project is licensed under the [![License: GPLv3](https://img.shields.io/bad
 - Commercial use
 - Modification
 - Distribution
-- Patent use
 - Private use
 
 ### Limitations
 
+- Liability
 - Warranty
 
 ### Conditions
 
 - Include original license
-- State changes
-- Disclose source
-- Same license for derivative works
-- Notify changes
 
 
 ## Notices
@@ -34,4 +30,4 @@ This project is licensed under the [![License: GPLv3](https://img.shields.io/bad
 
 ## Contact
 
-If you have any questions about the license, please contact at FSDFSDF.
+If you have any questions about the license, please contact at fsdfsdf.

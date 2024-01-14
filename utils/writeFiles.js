@@ -5,9 +5,7 @@ function writeFiles(fileName, data){
     if(err){
       console.log(err);
       return;
-    }
-
-    console.log('Generating README...');
+    }  
   });
 };
 

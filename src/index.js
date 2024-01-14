@@ -5,23 +5,6 @@ const copyImage = require("../utils/copyFiles");
 const writeFile = require("../utils/writeFiles");
 
 // Markdown symbols
-/**
- email - DONE
- github account - DONE
- logo (optional) - DONE
- title - DONE
- description - DONE
- screenshoot (optional) - DONE
- installation - DONE
- usage - DONE
- contributing - DONE
- tests - DONE
- questions  - DONE
- licence - DONE
- 
- table of context (based on above)
-
- */
 
 function validation(input, textType){  
   if(input.trim() === ''){
@@ -174,20 +157,36 @@ function promptLicense(){
   ])
 }
 
+// Markdown icons
+const icons = {
+  table: "📖",
+  overview: "📄",        
+  screenshot: "🖼️",      
+  features: "🚀",        
+  installation: "⚙️",    
+  usage: "🔍",           
+  modules: "📦",         
+  contributing: "🤝",    
+  test: "🧪",            
+  questions: "❓",       
+  license: "📜",         
+  acknowledge: "🙏", 
+};
+
 // Function to filter table of contents based on user responses
 function filterTableOfContents(answers) {
   const tableOfContents = {
-    description: "- [Overview](#overview)",
-    has_screenshot: "- [Screenshot](#screenshot)",
-    feature: "- [Features](#features)",
-    installation: "- [Installation](#installation)",
-    usage: "- [How to use it](#how-to-use-it)",
-    module: "- [Modules](#modules)",
-    repo: "- [Contributing](#contributing)",
-    test: "- [Test](#test)",
-    email: "- [Questions](#questions)",
-    licenseType: "- [License](#license)",
-    acknowledge: "- [Acknowledgments](#acknowledgments)",
+    description: `- [${icons.overview} Overview](#-overview)`,
+    has_screenshot: `- [${icons.screenshot} Screenshot](#-screenshot)`,
+    feature: `- [${icons.features} Features](#-features)`,
+    installation: `- [${icons.installation} Installation](#-installation)`,
+    usage: `- [${icons.usage} How to use it](#-how-to-use-it)`,
+    module: `- [${icons.modules} Modules](#-modules)`,
+    repo: `- [${icons.contributing} Contributing](#-contributing)`,
+    test: `- [${icons.test} Testing](#-testing)`,
+    email: `- [${icons.questions} Questions](#-questions)`,
+    licenseType: `- [${icons.license} License](#-license)`,
+    acknowledge: `- [${icons.acknowledge} Acknowledgments](#-acknowledgments)`,
   };
 
   // Filtered data entries user didnt choose
@@ -346,11 +345,13 @@ async function askQuestions() {
     // Data for generating the Readme file
     const readme =  markdownTemplate({
       ...allAnswers,
-      ...{table: table}
+      ...{table: table},
+      ...{icons: icons},
     });
 
     // Generating the Readme file
-    // writeFile('../output/README.md', readme);
+    writeFile('../output/README.md', readme);
+    console.log('Generating README...');
 
     // Copy the logo image
     if(logoAnswer['has_logo']){
@@ -370,6 +371,8 @@ async function askQuestions() {
       ...licenseBadge,
       ...emailAnswer,
     });
+
+    // Generate the license
     writeFile('../output/LICENSE.md', license);
    
   } catch (error) {

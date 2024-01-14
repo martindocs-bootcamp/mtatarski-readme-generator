@@ -8,7 +8,7 @@
 
 
 <!-- TECHNOLOGIES USED -->
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
 
 <!-- LICENSE BADGE -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -17,20 +17,20 @@
 
 
 <!-- MENU -->
-## Table of Contents
+## 📖 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [How to use it](#how-to-use-it)
-- [Contributing](#contributing)
-- [Questions](#questions)
-- [License](#license)
+- [📄 Overview](#-overview)
+- [🚀 Features](#-features)
+- [⚙️ Installation](#-installation)
+- [🔍 How to use it](#-how-to-use-it)
+- [🤝 Contributing](#-contributing)
+- [❓ Questions](#-questions)
+- [📜 License](#-license)
 
 <!-- OVERVIEW -->
-## Overview
+## 📄 Overview
 
-fsdfsdf
+fsdfsd
 
 
 <!-- SCREENSHOT (optional) -->
@@ -38,16 +38,16 @@ fsdfsdf
 
 <!-- FEATURES -->
 
-## Features
+## 🚀 Features
 
 | Feature  | Description  |
 |----------|--------------|
-| fsdfsd | fsdfsd |
+| ffsdfsdf | fsdfsdf |
 
 
 
 <!-- INSTALLATION -->
-## Installation
+## ⚙️ Installation
 
 1. fsdfsd:
 ```sh
@@ -57,7 +57,7 @@ fsdfsd
 
 
 <!-- USAGE -->
-## How to use it
+## 🔍 How to use it
 
 1. fsdfsd
 
@@ -67,13 +67,13 @@ fsdfsd
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
 
-- **[Submit Pull Requests](https://github.com/fsdfsdf/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-- **[Join the Discussions](https://github.com/fsdfsdf/discussions)**: Share your insights, provide feedback, or ask questions.
-- **[Report Issues](https://github.com/fsdfsdf/issues)**: Submit bugs found or log feature requests.
+- **[Submit Pull Requests](https://github.com/fsdfsdfsdf/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **[Join the Discussions](https://github.com/fsdfsdfsdf/discussions)**: Share your insights, provide feedback, or ask questions.
+- **[Report Issues](https://github.com/fsdfsdfsdf/issues)**: Submit bugs found or log feature requests.
 
 #### *Contributing Guidelines*
 
@@ -117,18 +117,18 @@ Contributions are welcome! Here are several ways you can contribute:
 </details>
 
 
-<!-- TESTS  -->
+<!-- TESTING  -->
 
 
 
 <!-- QUESTIONS  -->
-## Questions
+## ❓ Questions
 
-If you have any questions about the fsdfsdf repo, open an [Issues](https://github.com/fsdfsdf/issues) or contact me directly at [sdfsdfsdf](mailto:sdfsdfsdf). You can find more of my work at [fsfsdfsdfs](https://github.com/fsfsdfsdfs).
+If you have any questions about the fsdfsdfsdf repo, open an [Issues](https://github.com/fsdfsdfsdf/issues) or contact me directly at [fsdfsdf](mailto:fsdfsdf). You can find more of my work at [sdfsdf](https://github.com/sdfsdf).
 
 
 <!-- LICENSE DOCUMENT -->
-## License
+## 📜 License
 
 Please refer to the [LICENSE](./LICENSE.md) file in this repository for details on how this project is licensed.
 
