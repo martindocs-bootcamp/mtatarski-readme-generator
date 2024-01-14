@@ -1,7 +1,8 @@
 const inquirer = require("inquirer");
 const markdownTemplate = require("../templates/markdown");
+const licenseTemplate = require("../templates/license");
 const copyImage = require("../utils/copyFiles");
-const generateMarkdown = require("../utils/writeFiles");
+const writeFile = require("../utils/writeFiles");
 
 // Markdown symbols
 /**
@@ -343,13 +344,13 @@ async function askQuestions() {
     const table = filterTableOfContents(allAnswers);
 
     // Data for generating the Readme file
-    const answers =  markdownTemplate({
+    const readme =  markdownTemplate({
       ...allAnswers,
       ...{table: table}
     });
 
     // Generating the Readme file
-    generateMarkdown('../output/README.md', answers);
+    // writeFile('../output/README.md', readme);
 
     // Copy the logo image
     if(logoAnswer['has_logo']){
@@ -362,6 +363,14 @@ async function askQuestions() {
       const screenshotImage = JSON.stringify(screenshotAnswer['screenshotImage']).split('"')[1];
       copyImage(`../temp/images/${screenshotImage}`, `../output/images/${screenshotImage}`);
     }
+
+    // Data for generating the Readme file
+    const license =  licenseTemplate({
+      ...projectNameAnswer,
+      ...licenseBadge,
+      ...emailAnswer,
+    });
+    writeFile('../output/LICENSE.md', license);
    
   } catch (error) {
     console.error('Error during question prompts:', error);
