@@ -19,12 +19,12 @@ ${data.tech}
 
 
 <!-- MENU -->
-## Table of Contents
+## ${data.icons['table']} Table of Contents
 
 ${data.table}
 
 <!-- OVERVIEW -->
-## Overview
+## ${data.icons['overview']} Overview
 
 ${data.description}
 
@@ -33,7 +33,7 @@ ${data.description}
 ${
   data.has_screenshot ? 
   `
-## Screenshot
+## ${data.icons['screenshot']} Screenshot
 
 ![${data.logoImage.split('.')[0]} screenshot](./images/${data.screenshotImage})
 *${data.screenshotDesc}*
@@ -44,7 +44,7 @@ ${
 ${
   data.feature ? 
   `
-## Features
+## ${data.icons['features']} Features
 
 | Feature  | Description  |
 |----------|--------------|
@@ -54,13 +54,13 @@ ${data.feature}
 
 
 <!-- INSTALLATION -->
-## Installation
+## ${data.icons['installation']} Installation
 
 ${data.installation}
 
 
 <!-- USAGE -->
-## How to use it
+## ${data.icons['usage']} How to use it
 
 ${data.usage}
 
@@ -68,7 +68,7 @@ ${data.usage}
 <!-- MODULES -->
 ${data.module ? 
   `
-## Modules
+## ${data.icons['modules']} Modules
 
 <details close><summary>Root</summary>
 
@@ -82,7 +82,7 @@ ${data.module}
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## ${data.icons['contributing']} Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
 
@@ -132,10 +132,10 @@ Contributions are welcome! Here are several ways you can contribute:
 </details>
 
 
-<!-- TESTS  -->
+<!-- TESTING  -->
 ${data.test ? 
   `
-## Test
+## ${data.icons['test']} Testing
 
 ${data.test}   
   ` : ''
@@ -143,13 +143,13 @@ ${data.test}
 
 
 <!-- QUESTIONS  -->
-## Questions
+## ${data.icons['questions']} Questions
 
 If you have any questions about the ${data.repo} repo, open an [Issues](https://github.com/${data.repo}/issues) or contact me directly at [${data.email}](mailto:${data.email}). You can find more of my work at [${data.GitHub}](https://github.com/${data.GitHub}).
 
 
 <!-- LICENSE DOCUMENT -->
-## License
+## ${data.icons['license']} License
 
 Please refer to the [LICENSE](./LICENSE.md) file in this repository for details on how this project is licensed.
 
@@ -157,7 +157,7 @@ Please refer to the [LICENSE](./LICENSE.md) file in this repository for details 
 <!-- ACKNOWLEDGMENTS -->
 ${data.acknowledge ? 
   `
-## Acknowledgments
+## ${data.icons['acknowledge']} Acknowledgments
 
 ${data.acknowledge}  
   ` : ''
