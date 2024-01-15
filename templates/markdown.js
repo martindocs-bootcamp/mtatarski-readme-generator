@@ -159,7 +159,7 @@ ${data.acknowledge ?
   `
 ## ${data.icons['acknowledge']} Acknowledgments
 
-${data.acknowledge}  
+[${data.acknowledge}](https://github.com/${data.acknowledge}) 
   ` : ''
 }
 `;

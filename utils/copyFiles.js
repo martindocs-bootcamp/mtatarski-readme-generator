@@ -13,8 +13,8 @@ function copyImage(srcPath, destPath) {
 
    // Read the contents of the source image file
   const image = fs.readFileSync(srcPath);
-
-  // Write the contents to the destination image file
+  
+  // Synchronous operation that ensures that the file write operation is completed before the function returns.
   fs.writeFileSync(destPath, image);
 };
 
