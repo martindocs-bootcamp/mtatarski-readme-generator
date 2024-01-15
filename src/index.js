@@ -1,9 +1,12 @@
 const inquirer = require("inquirer");
+const banner = require('../utils/banner');
 const markdownTemplate = require("../templates/markdown");
 const licenseTemplate = require("../templates/license");
 const copyImage = require("../utils/copyImages");
 const writeFile = require("../utils/writeFiles");
 const generateFolderName = require("../utils/idsGenerator");
+
+
 
 function validation(input, textType){  
   if(input.trim() === ''){
@@ -202,6 +205,10 @@ function filterTableOfContents(answers) {
 
 // Function to ask questions
 async function askQuestions() {
+
+  // Display the banner
+  await banner();
+
   try {
     
     // GitHub username
@@ -389,5 +396,5 @@ async function askQuestions() {
 
 // Call the main function to start asking questions
 askQuestions();
-
+ 
 
