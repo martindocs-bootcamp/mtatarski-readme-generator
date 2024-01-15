@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// Function to write data to a file
 function writeFiles(fileName, data){  
 
   // Extract the directory path from the destinationPath

@@ -1,3 +1,4 @@
+// Importing required modules and dependencies
 const configLogic = require("./config/configLogic");
 const inquirer = require("inquirer");
 const banner = require('./utils/banner');
@@ -7,8 +8,14 @@ const copyImage = require("./utils/copyImages");
 const writeFile = require("./utils/writeFiles");
 const generateFolderName = require("./utils/idsGenerator");
 const showHelp = require("./help/help");
+
+// Parsing command line arguments
 const argv = require('minimist')(process.argv.slice(2))
+
+// Loading configuration from file
 const config = require("./config/config.json");
+
+// Clearing the console screen
 const clearScreen = require('./utils/clearScreen');
 
 // Load configuration
@@ -21,7 +28,9 @@ clearScreen();
 if (argv.help) {
   showHelp();
 } else{
-  // Continue with the main program 
+  // Main program logic
+
+  // CValidation function for text inputs 
   function validation(input, textType){  
     if(input.trim() === ''){
       return `${textType} cannot be empty.`;
@@ -32,7 +41,7 @@ if (argv.help) {
     return true;
   }
   
-  // Function for the "editor" question
+  // Function to prompt for text input
   function promptText(textType, msg) {
     return inquirer.prompt([
     {
@@ -44,7 +53,8 @@ if (argv.help) {
   ]);
 }
 
-function promptTextConfirm(textType, msg) {
+// Function to prompt for confirmation and additional text input
+function promptTextConfirm(textType) {
   const has_text = `has_${textType}`;
   
   return inquirer.prompt([
@@ -63,7 +73,7 @@ function promptTextConfirm(textType, msg) {
   ]);
 }
 
-// Function for 'image' question
+// Function to prompt for image input
 function promptImage(imgType){
   const has_img = `has_${imgType}`;
   
@@ -83,7 +93,7 @@ function promptImage(imgType){
   ]);
 }
 
-// Function to ask for repeating input
+// Function to prompt for repeating input
 async function promptRepeat(textType, msg) {
   const answers = [];
   
@@ -140,6 +150,7 @@ async function promptRepeat(textType, msg) {
   
 }
 
+// Function to prompt for technology selection
 function promptTechnology(){  
   return inquirer.prompt([
     {
@@ -158,6 +169,7 @@ function promptTechnology(){
   ])
 } 
 
+// Function to prompt for license selection
 function promptLicense(){  
   return inquirer.prompt([
     {

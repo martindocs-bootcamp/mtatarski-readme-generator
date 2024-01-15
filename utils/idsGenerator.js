@@ -1,5 +1,6 @@
 const addLeadingZeros = require('./leadingZero');
 
+// Function to generate a formatted ID based on the current date and time
 function generateID(){
   const date = new Date();
   const year = date.getFullYear();
