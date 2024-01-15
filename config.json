@@ -1,4 +1,5 @@
 {
   "banner": true,
-  "nobanner": false
+  "nobanner": false,
+  "help": true
 }

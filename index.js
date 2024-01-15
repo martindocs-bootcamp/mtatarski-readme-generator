@@ -6,25 +6,32 @@ const licenseTemplate = require("./templates/license");
 const copyImage = require("./utils/copyImages");
 const writeFile = require("./utils/writeFiles");
 const generateFolderName = require("./utils/idsGenerator");
-const config = require("./utils/config");
+const showHelp = require("./utils/help");
 const argv = require('minimist')(process.argv.slice(2))
+const config = require("./config.json");
 
 // Load configuration
 configLogic();
 
-function validation(input, textType){  
-  if(input.trim() === ''){
-    return `${textType} cannot be empty.`;
-  } else if(input.length < 5){
-    return `${textType} needs to be at least 5 characters.`;
+// Check for --help flag
+if (argv.help) {
+  showHelp();
+} else {
+  // Continue with the main program 
+
+  function validation(input, textType){  
+    if(input.trim() === ''){
+      return `${textType} cannot be empty.`;
+    } else if(input.length < 5){
+      return `${textType} needs to be at least 5 characters.`;
+    }
+    
+    return true;
   }
-
-  return true;
-}
-
-// Function for the "editor" question
-function promptText(textType, msg) {
-  return inquirer.prompt([
+  
+  // Function for the "editor" question
+  function promptText(textType, msg) {
+    return inquirer.prompt([
     {
       type: 'input',
       message: msg,
@@ -36,7 +43,7 @@ function promptText(textType, msg) {
 
 function promptTextConfirm(textType, msg) {
   const has_text = `has_${textType}`;
-
+  
   return inquirer.prompt([
     {
       type: "confirm",
@@ -52,11 +59,11 @@ function promptTextConfirm(textType, msg) {
     },
   ]);
 }
-  
+
 // Function for 'image' question
 function promptImage(imgType){
   const has_img = `has_${imgType}`;
-
+  
   return inquirer.prompt([
     {
       type: "confirm",
@@ -91,10 +98,10 @@ async function promptRepeat(textType, msg) {
       return {[textType]: false}
     };
   }  
-
+  
   // if(isProcede[textType]){
     let askAgain = true;    
-
+    
     while (askAgain) {
       const response = await inquirer.prompt([
         {
@@ -126,7 +133,7 @@ async function promptRepeat(textType, msg) {
       answers.push({name: response[textType], description: response[`${textType}Desc`]});    
       askAgain = response.askAgain;
     }
-  
+    
     return {[textType]: answers };
   // }
 }
@@ -142,7 +149,7 @@ function promptTechnology(){
         if (answer.length < 1) {
           return 'You must choose at least one technology.';
         }
-
+        
         return true;
       },
     }
@@ -157,10 +164,10 @@ function promptLicense(){
       message: 'What kind of license should your project have?',
       choices: ['MIT', 'BSD3', 'GPLv3', 'MPL2', 'Apache2'],
       // filter(val) {
-      //   return val.toLowerCase();
-      // },
-    },
-  ])
+        //   return val.toLowerCase();
+        // },
+      },
+    ])
 }
 
 // Markdown icons
@@ -194,7 +201,7 @@ function filterTableOfContents(answers) {
     licenseType: `- [${icons.license} License](#-license)`,
     acknowledge: `- [${icons.acknowledge} Acknowledgments](#-acknowledgments)`,
   };
-
+  
   // Filtered data entries user didnt choose
   const filteredEntries =Object.entries(answers)  
   .filter(([_, value]) => value) // Filter 'false' values / not choosen
@@ -209,25 +216,25 @@ function filterTableOfContents(answers) {
 
 // Function to ask questions
 async function askQuestions() {
-  // Display the banner 
-  if (argv.banner === true) {
+  // Display the banner   
+  if (config.banner === true) {
     await banner();    
   }
-
+  
   try {
     
     // GitHub username
     const githubUserNameAnswer = await promptText('GitHub', 'What is your GitHub username?');
-
+    
     // User email address
     const emailAnswer = await promptText('email', 'What is your email address?');
-
+    
     // Repository name
     const repoAnswer = await promptText('repo', 'What is your repository name?');
-
+    
     // License type
     const licenseBadgesAnswer = await promptLicense();
-
+    
     const licensesBadges = { 
       'MIT':'https://img.shields.io/badge/License-MIT-yellow.svg',      
       'BSD3':'https://img.shields.io/badge/License-BSD_3--Clause-orange.svg',
@@ -235,15 +242,15 @@ async function askQuestions() {
       'MPL2':'https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg',
       'Apache2':'https://img.shields.io/badge/License-Apache_2.0-yellowgreen.svg',
     };
-
+    
     const licenseBadge = {
       licenseType: licenseBadgesAnswer['license'],
       licenseUrl: licensesBadges[licenseBadgesAnswer['license']]
     };
-
+    
     // Technologies used
     const technologyAnswer = await promptTechnology();
-
+    
     const technologies = {
       "JavaScript" : '[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)', 
       "React" : '[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)',
@@ -254,7 +261,7 @@ async function askQuestions() {
       "JQuery" : '[![jQuery](https://img.shields.io/badge/jQuery-3.x-blueviolet.svg)](https://jquery.com/)',
       "HTML" : '[![HTML](https://img.shields.io/badge/HTML5-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)'
     }
-
+    
     const technologiesPicked = Object.entries(technologies)
     .filter((technology) => JSON.stringify([technologyAnswer['technologies']]).includes(technology[0]))
     .map(url => url[1])
@@ -268,28 +275,28 @@ async function askQuestions() {
     
     // Project installation process
     const instalationAnswer = await promptRepeat('instalation', 'Please provide installation description');
-
+    
     const installation = instalationAnswer['instalation'].map((steps, index) => {
       return `${index + 1}. ${steps.name}:\n\`\`\`sh\n${steps.description}\n\`\`\`\n`
     }).join('');
     
     // How to use project 
     const usageAnswer = await promptText('usage', 'What does the user need to know about using the repo? (sentance separated with fullstop)');
-  
+    
     const usage = usageAnswer['usage']
     .split('.')
     .filter(empty => empty !== '')
     .map((str, index) => `${index + 1}. ${str.trim()}`)
     .join('\n')
-      
+    
     // Project features
     const featuresTableAnswer = await promptRepeat('feature', 'Please provide name of the project feature');
-
+    
     const features = featuresTableAnswer['feature'].map((feature) => `| ${feature.name} | ${feature.description} |`).join('\n');
-
+    
     // Project logo
     const logoAnswer = await promptImage('logo');
-
+    
     // Project screenshot
     const screenshotAnswer = await promptImage('screenshot');
     
@@ -300,7 +307,7 @@ async function askQuestions() {
     
     // Project modules
     const modulesTableAnswer = await promptRepeat('module', 'Enter module name (with extension)');
-
+    
     let module = false;
     if(modulesTableAnswer['module']){
       module = modulesTableAnswer['module'].map((file) => {
@@ -310,17 +317,17 @@ async function askQuestions() {
     
     // Project test process
     const testAnswer = await promptRepeat('test', 'What commands should be run to run the tests?');
-
+    
     let test = false;
     if(testAnswer['test']){
       test = testAnswer['test'].map((steps, index) => {
         return `${index + 1}. ${steps.name}:\n\`\`\`sh\n${steps.description}\n\`\`\`\n`
       }).join('');
     }
-
+    
     // Acknowledge
     const acknowledAnswer = await promptTextConfirm('acknowledgments');
-
+    
     let acknowledge = false;
     if(acknowledAnswer['acknowledgmentsText']){
       acknowledge = acknowledAnswer['acknowledgmentsText']
@@ -329,7 +336,7 @@ async function askQuestions() {
       .map((str) => `- ${str.trim()}`)
       .join('\n')
     }
-
+    
     // All answers
     const allAnswers = {
       ...githubUserNameAnswer,
@@ -349,24 +356,24 @@ async function askQuestions() {
       ...{test: test},
       ...{acknowledge: acknowledge},
     };
-
-
+    
+    
     // Generate unique folder name with current date
     const folderName = generateFolderName();
-
+    
     // Output folder got Readme files
     const folderPath = `./output/${folderName}`;
     
     // Filtered Table of Contents
     const table = filterTableOfContents(allAnswers);
-
+    
     // Data for generating the Readme file
     const readme =  markdownTemplate({
       ...allAnswers,
       ...{table: table},
       ...{icons: icons},
     });
-
+    
     // Generating the Readme file
     writeFile(`${folderPath}/README.md`, readme);   
     
@@ -376,30 +383,31 @@ async function askQuestions() {
       ...licenseBadge,
       ...emailAnswer,
     });
-
+    
     console.log('Generating README...');
     
     // Generate the license
     writeFile(`${folderPath}/LICENSE.md`, license);
-
+    
     // Copy the logo image
     if(logoAnswer['has_logo']){
       const logoImage = JSON.stringify(logoAnswer['logoImage']).split('"')[1];
       copyImage(`./temp/images/${logoImage}`, `./output//${folderName}/images/${logoImage}`);
     }
-
+    
     // Copy the screenshot image
     if(screenshotAnswer['has_screenshot']){
       const screenshotImage = JSON.stringify(screenshotAnswer['screenshotImage']).split('"')[1];
       copyImage(`./temp/images/${screenshotImage}`, `./output//${folderName}/images/${screenshotImage}`);
     }
-   
+    
   } catch (error) {
     console.error('Error during question prompts:', error);
   }
 }
 
-// Call the main function to start asking questions
-askQuestions();
- 
+  // Call the main function to start asking questions
+  askQuestions();
+}
+
 

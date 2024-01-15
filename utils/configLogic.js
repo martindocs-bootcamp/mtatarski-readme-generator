@@ -5,7 +5,6 @@ function configLogic() {
   // Load the configuration file
   let config = loadConfig();
 
-  // Your main application logic here, using config values
   if (argv.banner) {
     console.log('Banner is ON');
     config.banner = true;
