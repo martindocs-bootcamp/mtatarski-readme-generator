@@ -1,24 +1,26 @@
 const showBanner = require('node-banner');
 
 // Program's information
-const title = 'Readme Generator';
+const title = 'README GENERATOR';
 const author = 'Marcin Tatarski';
 const version = '1.0';
 const date = '15/01/2024';
-const description = 'A versatile README Generator. Quickly create professional README files for your projects.';
+const description = 'A versatile README Generator.';
 const repository = 'https://github.com/martindocs/mtatarski-readme-generator';
 const help = 'node index.js --help';
 
-async function banner ()  {
-  await showBanner(
-    title, 
+function banner ()  {
+  console.log(    
     `
-      Author: ${author} \n 
-      Date: ${date} \n 
-      Version: ${version} \n
-      Description: ${description} \n
-      Repository: ${repository} \n 
-      Help: ${help}
+  ╔═══════════════════════════════════════════════════════════════════════════════╗
+  ║ ${title} v${version}                                                         ║
+  ║ Author: ${author}                                                       ║
+  ║ Date: ${date}                                                              ║
+  ║ Description: ${description}                                    ║
+  ║ Repository: ${repository}          ║
+  ║ Help: ${help}                                                    ║
+  ║ License: MIT                                                                  ║
+  ╚═══════════════════════════════════════════════════════════════════════════════╝
     `
     );
 };
