@@ -1,4 +1,5 @@
 const { program } = require('commander');
+const clearScreen = require('./clearScreen');
 
 // Function to show the command help 
 function showHelp() {
@@ -29,6 +30,8 @@ function showHelp() {
   program.parse(process.argv);
 
   if (program.help) {
+    // Clear the console before showing help
+    clearScreen();
     program.outputHelp(); // Prints the help information to the console
   }
 }
