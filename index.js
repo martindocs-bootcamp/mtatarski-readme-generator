@@ -1,10 +1,10 @@
 const inquirer = require("inquirer");
-const banner = require('../utils/banner');
-const markdownTemplate = require("../templates/markdown");
-const licenseTemplate = require("../templates/license");
-const copyImage = require("../utils/copyImages");
-const writeFile = require("../utils/writeFiles");
-const generateFolderName = require("../utils/idsGenerator");
+const banner = require('./utils/banner');
+const markdownTemplate = require("./templates/markdown");
+const licenseTemplate = require("./templates/license");
+const copyImage = require("./utils/copyImages");
+const writeFile = require("./utils/writeFiles");
+const generateFolderName = require("./utils/idsGenerator");
 
 
 
@@ -350,7 +350,7 @@ async function askQuestions() {
     const folderName = generateFolderName();
 
     // Output folder got Readme files
-    const folderPath = `../output/${folderName}`;
+    const folderPath = `./output/${folderName}`;
     
     // Filtered Table of Contents
     const table = filterTableOfContents(allAnswers);
@@ -380,13 +380,13 @@ async function askQuestions() {
     // Copy the logo image
     if(logoAnswer['has_logo']){
       const logoImage = JSON.stringify(logoAnswer['logoImage']).split('"')[1];
-      copyImage(`../temp/images/${logoImage}`, `../output//${folderName}/images/${logoImage}`);
+      copyImage(`./temp/images/${logoImage}`, `./output//${folderName}/images/${logoImage}`);
     }
 
     // Copy the screenshot image
     if(screenshotAnswer['has_screenshot']){
       const screenshotImage = JSON.stringify(screenshotAnswer['screenshotImage']).split('"')[1];
-      copyImage(`../temp/images/${screenshotImage}`, `../output//${folderName}/images/${screenshotImage}`);
+      copyImage(`./temp/images/${screenshotImage}`, `./output//${folderName}/images/${screenshotImage}`);
     }
    
   } catch (error) {
