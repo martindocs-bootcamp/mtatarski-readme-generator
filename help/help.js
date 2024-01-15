@@ -1,5 +1,5 @@
 const { program } = require('commander');
-const clearScreen = require('./clearScreen');
+const clearScreen = require('../utils/clearScreen');
 
 // Function to show the command help 
 function showHelp() {

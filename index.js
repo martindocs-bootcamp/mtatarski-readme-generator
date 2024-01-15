@@ -1,4 +1,4 @@
-const configLogic = require("./utils/configLogic");
+const configLogic = require("./config/configLogic");
 const inquirer = require("inquirer");
 const banner = require('./utils/banner');
 const markdownTemplate = require("./templates/markdown");
@@ -6,19 +6,22 @@ const licenseTemplate = require("./templates/license");
 const copyImage = require("./utils/copyImages");
 const writeFile = require("./utils/writeFiles");
 const generateFolderName = require("./utils/idsGenerator");
-const showHelp = require("./utils/help");
+const showHelp = require("./help/help");
 const argv = require('minimist')(process.argv.slice(2))
-const config = require("./config.json");
+const config = require("./config/config.json");
+const clearScreen = require('./utils/clearScreen');
 
 // Load configuration
 configLogic();
 
+// clear screen
+clearScreen();
+
 // Check for --help flag
 if (argv.help) {
   showHelp();
-} else {
+} else{
   // Continue with the main program 
-
   function validation(input, textType){  
     if(input.trim() === ''){
       return `${textType} cannot be empty.`;
@@ -99,43 +102,42 @@ async function promptRepeat(textType, msg) {
     };
   }  
   
-  // if(isProcede[textType]){
-    let askAgain = true;    
-    
-    while (askAgain) {
-      const response = await inquirer.prompt([
-        {
-          type: 'input',
-          name: textType,
-          message: msg,        
-          validate : (input) => validation(input, textType),  
-        },
-        {
-          type: 'input',
-          name: `${textType}Desc`,
-          message: `Enter the ${
-            textType === 'instalation' || textType === 'test' ? 
-            `${textType} command` : `${textType} description`
-          }`,
-          validate : (input) => validation(input, textType),   
-        },
-        {
-          type: 'confirm',
-          name: 'askAgain',
-          message: `Want to enter another ${
-            textType === 'test' ? 
-            `${textType} step` : `${textType} description`
-          } (enter for YES)?`,
-          default: true,
-        },
-      ]);
+  let askAgain = true;    
   
-      answers.push({name: response[textType], description: response[`${textType}Desc`]});    
-      askAgain = response.askAgain;
-    }
-    
-    return {[textType]: answers };
-  // }
+  while (askAgain) {
+    const response = await inquirer.prompt([
+      {
+        type: 'input',
+        name: textType,
+        message: msg,        
+        validate : (input) => validation(input, textType),  
+      },
+      {
+        type: 'input',
+        name: `${textType}Desc`,
+        message: `Enter the ${
+          textType === 'instalation' || textType === 'test' ? 
+          `${textType} command` : `${textType} description`
+        }`,
+        validate : (input) => validation(input, textType),   
+      },
+      {
+        type: 'confirm',
+        name: 'askAgain',
+        message: `Want to enter another ${
+          textType === 'test' ? 
+          `${textType} step` : `${textType} description`
+        } (enter for YES)?`,
+        default: true,
+      },
+    ]);
+
+    answers.push({name: response[textType], description: response[`${textType}Desc`]});    
+    askAgain = response.askAgain;
+  }
+  
+  return {[textType]: answers };
+  
 }
 
 function promptTechnology(){  
@@ -162,10 +164,7 @@ function promptLicense(){
       type: 'list',
       name: 'license',
       message: 'What kind of license should your project have?',
-      choices: ['MIT', 'BSD3', 'GPLv3', 'MPL2', 'Apache2'],
-      // filter(val) {
-        //   return val.toLowerCase();
-        // },
+      choices: ['MIT', 'BSD3', 'GPLv3', 'MPL2', 'Apache2'],     
       },
     ])
 }
@@ -216,9 +215,9 @@ function filterTableOfContents(answers) {
 
 // Function to ask questions
 async function askQuestions() {
-  // Display the banner   
-  if (config.banner === true) {
-    await banner();    
+  // Display the banner  
+  if (config.banner === true) {        
+      banner();
   }
   
   try {

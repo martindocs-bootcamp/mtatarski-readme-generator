@@ -4,7 +4,7 @@ const { loadConfig, updateConfig, saveConfig } = require('./config');
 function configLogic() {
   // Load the configuration file
   let config = loadConfig();
-
+  
   if (argv.banner) {
     console.log('Banner is ON');
     config.banner = true;
@@ -13,7 +13,7 @@ function configLogic() {
     console.log('Banner is OFF');
     config.banner = false;
     config.nobanner = true;
-  }
+  } 
 
   // Update configuration 
   config = updateConfig(config, argv);
