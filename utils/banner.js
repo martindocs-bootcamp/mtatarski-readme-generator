@@ -9,6 +9,7 @@ const description = 'A versatile README Generator.';
 const repository = 'https://github.com/martindocs/mtatarski-readme-generator';
 const help = 'node index.js --help';
 
+// Function to display a banner with program information
 function banner ()  {
   console.log(    
     `

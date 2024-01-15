@@ -4,9 +4,10 @@ const clearScreen = require('../utils/clearScreen');
 // Function to show the command help 
 function showHelp() {
   
-  // disable commander -h option
-  program.helpOption(false); // Disable the default help option
+  // Disable commander module -h option
+  program.helpOption(false); 
 
+  // Set the description for the program
   program
     .description('Readme Generator - Quickly create professional README files for your projects.')
   
@@ -25,10 +26,11 @@ function showHelp() {
   });
 
   /**
-   Parse the process.argv array. It goes through the command-line arguments,    matches them against the options and commands with program.option() and program.command(), and executes the corresponding code.
+   Parse the process.argv array. It goes through the command-line arguments, matches them against the options and commands with program.option() and program.command(), and executes the corresponding code.
    */
   program.parse(process.argv);
 
+  // If the --help flag is provided, clear the console and display the help information
   if (program.help) {
     // Clear the console before showing help
     clearScreen();

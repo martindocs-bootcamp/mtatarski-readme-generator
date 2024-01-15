@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// Function to copy an image file from source to destination
 function copyImage(srcPath, destPath) {
 
   // Extract the directory path from the destinationPath
