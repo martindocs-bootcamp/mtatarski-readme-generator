@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const markdownTemplate = require("../templates/markdown");
 const licenseTemplate = require("../templates/license");
-const copyImage = require("../utils/copyFiles");
+const copyImage = require("../utils/copyImages");
 const writeFile = require("../utils/writeFiles");
 const generateFolderName = require("../utils/idsGenerator");
 
