@@ -17,7 +17,8 @@ async function banner ()  {
       Version: ${version} \n
       Description: ${description} \n
       Repository: ${repository} 
-    `);
+    `
+    );
 };
 
 module.exports = banner;
