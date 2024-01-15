@@ -1,3 +1,4 @@
+const configLogic = require("./utils/configLogic");
 const inquirer = require("inquirer");
 const banner = require('./utils/banner');
 const markdownTemplate = require("./templates/markdown");
@@ -5,8 +6,11 @@ const licenseTemplate = require("./templates/license");
 const copyImage = require("./utils/copyImages");
 const writeFile = require("./utils/writeFiles");
 const generateFolderName = require("./utils/idsGenerator");
+const config = require("./utils/config");
+const argv = require('minimist')(process.argv.slice(2))
 
-
+// Load configuration
+configLogic();
 
 function validation(input, textType){  
   if(input.trim() === ''){
@@ -205,9 +209,10 @@ function filterTableOfContents(answers) {
 
 // Function to ask questions
 async function askQuestions() {
-
-  // Display the banner
-  await banner();
+  // Display the banner 
+  if (argv.banner === true) {
+    await banner();    
+  }
 
   try {
     
