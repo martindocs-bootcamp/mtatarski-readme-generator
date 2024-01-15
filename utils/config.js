@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
 
-// Additional logic to handle flags
 const argv = minimist(process.argv.slice(2));
 const config = loadConfig();
 updateConfig(config, argv);
@@ -18,7 +17,8 @@ function loadConfig() {
     return {
       // Set default values for your flags
       "banner": true,
-      "nobanner": false
+      "nobanner": false,
+      "help": true
     };
   }
 }
