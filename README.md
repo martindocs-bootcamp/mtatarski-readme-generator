@@ -68,6 +68,21 @@ npm install inquirer@6.3.1 commander@11.1.0 minimist@1.2.8
 - **Dynamic README Generation:** Create README files dynamically through user input utilizing the Inquirer package.
 - **Customization Options:** Tailor your README by easily adding a logo or screenshot to enhance project visibility.
 - **Multiple README Support:** Generate multiple README files without overwriting each other. Each file is stored in a uniquely named folder (e.g., YYYYMMDD-HHMMSS).
+- **Terminal Banner Display:** Optionally display or hide the terminal banner using the `--banner` or `--nobanner` flag. For example:
+   ```sh
+   node index.js --banner
+   ```
+   or
+   ```sh
+   node index.js --nobanner
+   ```
+
+   **Note:** There is a known bug where the banner may not be immediately disabled. If you encounter this issue, try reloading the program or refer to the [Troubleshooting section](#troubleshooting) for more information.
+   <br>
+- **Development Terminal Help:** Access helpful information about the terminal commands using the `--help` option. For example:
+    ```sh
+    node index.js --help
+    ```
 
 ## Contributions
 
