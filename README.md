@@ -23,7 +23,7 @@ To use the Readme Generator, follow these steps:
 2. Clone this repository to your local machine.
 
 ```sh
-git clone https://github.com/martindocs/mtatarski-readme-generator.git
+git clone https://github.com/martindocs-bootcamp/mtatarski-readme-generator.git
 ```
 
 3. Navigate to the project directory.
