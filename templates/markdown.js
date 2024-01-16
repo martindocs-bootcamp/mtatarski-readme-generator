@@ -35,7 +35,7 @@ ${
   `
 ## ${data.icons['screenshot']} Screenshot
 
-![${data.logoImage.split('.')[0]} screenshot](./images/${data.screenshotImage})
+![${data.screenshotImage.split('.')[0]} screenshot](./images/${data.screenshotImage})
 *${data.screenshotDesc}*
 ` : ''    
 }
@@ -159,9 +159,9 @@ ${data.acknowledge ?
   `
 ## ${data.icons['acknowledge']} Acknowledgments
 
-[${data.acknowledge}](https://github.com/${data.acknowledge}) 
-  ` : ''
-}
+${data.acknowledge}
+    ` : ''
+  }
 `;
 }
 

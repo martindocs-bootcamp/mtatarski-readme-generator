@@ -201,9 +201,9 @@ const icons = {
 function filterTableOfContents(answers) {
   const tableOfContents = {
     description: `- [${icons.overview} Overview](#-overview)`,
-    has_screenshot: `- [${icons.screenshot} Screenshot](#-screenshot)`,
+    has_screenshot: `- [${icons.screenshot} Screenshot](#️-screenshot)`,
     feature: `- [${icons.features} Features](#-features)`,
-    installation: `- [${icons.installation} Installation](#-installation)`,
+    installation: `- [${icons.installation} Installation](#️-installation)`,
     usage: `- [${icons.usage} How to use it](#-how-to-use-it)`,
     module: `- [${icons.modules} Modules](#-modules)`,
     repo: `- [${icons.contributing} Contributing](#-contributing)`,
@@ -344,10 +344,10 @@ async function askQuestions() {
       acknowledge = acknowledAnswer['acknowledgmentsText']
       .split(',')
       .filter(empty => empty !== '')
-      .map((str) => `- ${str.trim()}`)
-      .join('\n')
+      .map((str) => `- ${str.trim()}\n`)
+      .join('')
     }
-    
+    console.log(acknowledge)
     // All answers
     const allAnswers = {
       ...githubUserNameAnswer,
