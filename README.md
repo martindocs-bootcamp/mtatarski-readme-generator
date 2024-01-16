@@ -65,7 +65,7 @@ npm install inquirer@6.3.1 commander@11.1.0 minimist@1.2.8
 
 ## Features
 
-- **Dynamic README Generation:** Create README files dynamically through user input utilizing the Inquirer package.
+- **Dynamic README and LICENSE Generation:** Create README and LICENSE files dynamically through user input utilizing the Inquirer package.
 - **Customization Options:** Tailor your README by easily adding a logo or screenshot to enhance project visibility.
 - **Multiple README Support:** Generate multiple README files without overwriting each other. Each file is stored in a uniquely named folder (e.g., YYYYMMDD-HHMMSS).
 - **Terminal Banner Display:** Optionally display or hide the terminal banner using the `--banner` or `--nobanner` flag. For example:
