@@ -1,6 +1,6 @@
 {
-  "banner": false,
-  "nobanner": true,
+  "banner": true,
+  "nobanner": false,
   "help": true,
   "nobanne": true
 }
