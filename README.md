@@ -88,9 +88,7 @@ npm install inquirer@6.3.1 commander@11.1.0 minimist@1.2.8
 
 Contributions are welcome! Here are several ways you can contribute:
 
-- **[Submit Pull Requests](https://github.com/mtatarski-readme-generator/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-- **[Join the Discussions](https://github.com/mtatarski-readme-generator/discussions)**: Share your insights, provide feedback, or ask questions.
-- **[Report Issues](https://github.com/mtatarski-readme-generator/issues)**: Submit bugs found or log feature requests.
+- **[Report Issues](https://github.com/martindocs-bootcamp/mtatarski-readme-generator/issues)**: Submit bugs found or log feature requests.
 
 #### *Contributing Guidelines*
 
