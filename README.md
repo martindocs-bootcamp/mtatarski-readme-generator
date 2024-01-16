@@ -148,10 +148,10 @@ If you are experiencing an issue where the banner is not properly disabled even 
 We welcome feature requests and bug reports from our users. If you have a suggestion for a new feature or if you encounter a bug, please follow these steps:
 
 1. **Feature Requests:**
-   - If you have an idea for a new feature, feel free to open a feature request on the [GitHub repository](https://github.com/martindocs/mtatarski-readme-generator). Provide a detailed description of the proposed feature and why it would be beneficial.
+   - If you have an idea for a new feature, feel free to open a feature request on the [GitHub repository](https://github.com/martindocs-bootcamp/mtatarski-readme-generator). Provide a detailed description of the proposed feature and why it would be beneficial.
 
 2. **Bug Reports:**
-   - If you encounter a bug, please open a detailed bug report on the [GitHub repository](https://github.com/martindocs/mtatarski-readme-generator). Include information about your operating system, Node.js version, and any steps to reproduce the issue.
+   - If you encounter a bug, please open a detailed bug report on the [GitHub repository](https://github.com/martindocs-bootcamp/mtatarski-readme-generator). Include information about your operating system, Node.js version, and any steps to reproduce the issue.
 
 Our team is dedicated to improving the program and addressing user feedback. Thank you for helping us make it better!
 
