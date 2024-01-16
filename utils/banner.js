@@ -1,5 +1,3 @@
-const showBanner = require('node-banner');
-
 // Program's information
 const title = 'README GENERATOR';
 const author = 'Marcin Tatarski';
