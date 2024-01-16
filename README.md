@@ -49,7 +49,7 @@ node index.js
 
 2. Answer the prompts to customize your README.
 3. Once completed, find the generated README in the `output` folder.
-4. For a quick demonstration, you can watch a short video on youtube [▶️ watch a short video](https://www.youtube.com/#) showcasing how to use the Readme Generator.
+4. For a quick demonstration, you can watch a short video on youtube [▶️ watch a short video](https://youtu.be/CKs7uv3Bqks) showcasing how to use the Readme Generator.
 
 ## Dependencies
 
