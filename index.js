@@ -347,7 +347,7 @@ async function askQuestions() {
       .map((str) => `- ${str.trim()}\n`)
       .join('')
     }
-    console.log(acknowledge)
+   
     // All answers
     const allAnswers = {
       ...githubUserNameAnswer,
