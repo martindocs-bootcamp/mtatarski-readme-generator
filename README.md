@@ -8,6 +8,18 @@ The primary tools used include:
 
 - **Node.js (v19.4.0):** powers the Readme Generator, providing a robust JavaScript runtime for executing command-line operations efficiently. 
 
+## Table of Contents
+- [Screenshot](#screenshot)
+- [Installation](#installation)
+- [How to Use](#how-to-use)
+- [Dependencies](#dependencies)
+- [Features](#features)
+- [Tests](#tests)
+- [Contributions](#contributions)
+- [Troubleshooting](#troubleshooting)
+- [Feature Requests and Bug Fixes](#feature-requests-and-bug-fixes)
+- [Questions](#questions)
+- [License](#license)
 
 ## Screenshot
 
@@ -84,6 +96,11 @@ npm install inquirer@6.3.1 commander@11.1.0 minimist@1.2.8
     node index.js --help
     ```
 
+## Tests
+```
+N/A
+```
+
 ## Contributions
 
 Contributions are welcome! Here are several ways you can contribute:
@@ -154,6 +171,9 @@ We welcome feature requests and bug reports from our users. If you have a sugges
    - If you encounter a bug, please open a detailed bug report on the [GitHub repository](https://github.com/martindocs-bootcamp/mtatarski-readme-generator). Include information about your operating system, Node.js version, and any steps to reproduce the issue.
 
 Our team is dedicated to improving the program and addressing user feedback. Thank you for helping us make it better!
+
+## Questions
+If you have any questions, feel free to reach out to me via [GitHub](https://github.com/martindocs).
 
 ## License
 
