@@ -6,7 +6,7 @@ The Readme Generator is a command-line application built to simplify the creatio
 
 The primary tools used include:
 
-- **Node.js:** powers the Readme Generator, providing a robust JavaScript runtime for executing command-line operations efficiently. 
+- **Node.js (v19.4.0):** powers the Readme Generator, providing a robust JavaScript runtime for executing command-line operations efficiently. 
 
 
 ## Screenshot
@@ -56,15 +56,11 @@ node index.js
 The following Node.js packages are utilized in this project:
 
 - **Inquirer**: A powerful package for handling user prompts, enabling dynamic input in the command line.
+- **Commander**: A module for creating command-line interfaces with a focus on simplicity and extensibility.
+- **Minimist**: A minimalist command-line argument parser for Node.js.
 
 ```sh
-npm install inquirer
-```
-
-- **Node-banner**: A package for creating banners in the terminal.
-
-```sh
-npm install node-banner
+npm install inquirer@6.3.1 commander@11.1.0 minimist@1.2.8
 ```
 
 ## Features
@@ -121,6 +117,30 @@ Contributions are welcome! Here are several ways you can contribute:
 10. **Repeat the Process if Necessary**: Start from point 3 onwards.
 
 </details>
+
+## Troubleshooting
+### Banner Display Issue
+
+If you are experiencing an issue where the banner is not properly disabled even when using the `--nobanner` flag, follow these steps to resolve the problem:
+
+1. **Reload the Program:**
+   - After changing the `--nobanner` flag, try reloading the program. Sometimes the changes might not take effect immediately.
+
+2. **Check Configuration:**
+   - Ensure that the configuration file (`config.json`) reflects the correct values for the `banner` and `nobanner` flags after running the program with the `--nobanner` option.
+
+
+### Feature Requests and Bug Fixes
+
+We welcome feature requests and bug reports from our users. If you have a suggestion for a new feature or if you encounter a bug, please follow these steps:
+
+1. **Feature Requests:**
+   - If you have an idea for a new feature, feel free to open a feature request on the [GitHub repository](https://github.com/martindocs/mtatarski-readme-generator). Provide a detailed description of the proposed feature and why it would be beneficial.
+
+2. **Bug Reports:**
+   - If you encounter a bug, please open a detailed bug report on the [GitHub repository](https://github.com/martindocs/mtatarski-readme-generator). Include information about your operating system, Node.js version, and any steps to reproduce the issue.
+
+Our team is dedicated to improving the program and addressing user feedback. Thank you for helping us make it better!
 
 ## License
 
